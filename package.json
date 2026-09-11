@@ -6,11 +6,23 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:android": "vite build && npx cap sync android",
+    "android:sync": "npx cap sync android",
+    "android:copy": "npx cap copy android",
     "lint": "tsc --noEmit",
     "preview": "vite preview",
     "transcoder": "node transcoder/server.cjs"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/browser": "^8.0.4",
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/keyboard": "^8.0.5",
+    "@capacitor/network": "^8.0.1",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.3",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",

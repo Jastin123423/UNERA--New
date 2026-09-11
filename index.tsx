@@ -5,8 +5,11 @@ import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './AppRouter';  // ✅ Changed from App to AppRouter
 
 import { LanguageProvider } from './contexts/LanguageContext';
-
 import { setupUneraPush } from './firebase';
+import { initAndroidBridge } from './utils/androidBridge';
+
+// Initialize native bridge features when on Android
+initAndroidBridge();
 
 const rootElement =
   document.getElementById('root');
