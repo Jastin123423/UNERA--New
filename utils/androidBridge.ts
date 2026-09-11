@@ -4,6 +4,90 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Network } from '@capacitor/network';
 import { Browser } from '@capacitor/browser';
+import { getApiBaseUrl, resolveApiUrl, isNativeApp } from './api';
+
+export { getApiBaseUrl, resolveApiUrl, isNativeApp };
+
+/**
+ * Intercepts browser network requests in native Android WebView
+ * so relative '/api/...' calls reach the live backend (https://unera.social)
+ * instead of failing against 'https://localhost'.
+ */
+function setupNativeNetworkInterceptor(): void {
+  if (typeof window === 'undefined') return;
+
+  const base = getApiBaseUrl();
+  if (!base) return;
+
+  console.log('🌐 UNERA Native: API base configured to', base);
+
+  // 1. Monkey-patch window.fetch
+  if (typeof window.fetch === 'function' && !(window as any).__uneraFetchPatched) {
+    const originalFetch = window.fetch.bind(window);
+
+    window.fetch = async function (input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+      try {
+        let urlStr = '';
+        if (typeof input === 'string') {
+          urlStr = input;
+        } else if (input instanceof URL) {
+          urlStr = input.toString();
+        } else if (typeof Request !== 'undefined' && input instanceof Request) {
+          urlStr = input.url;
+        } else {
+          urlStr = String(input);
+        }
+
+        const resolvedUrl = resolveApiUrl(urlStr);
+
+        if (typeof input === 'string' || input instanceof URL) {
+          return await originalFetch(resolvedUrl, init);
+        }
+
+        if (typeof Request !== 'undefined' && input instanceof Request) {
+          const reqInit: RequestInit = {
+            method: input.method,
+            headers: input.headers,
+            body: init?.body !== undefined ? init.body : (input.method !== 'GET' && input.method !== 'HEAD' ? (input as any).body : undefined),
+            mode: 'cors',
+            credentials: input.credentials || 'same-origin',
+            cache: input.cache,
+            redirect: input.redirect,
+            referrer: input.referrer,
+            integrity: input.integrity,
+            signal: init?.signal || input.signal,
+          };
+          const newRequest = new Request(resolvedUrl, reqInit);
+          return await originalFetch(newRequest, init);
+        }
+
+        return await originalFetch(resolvedUrl, init);
+      } catch (err) {
+        console.warn('Network request failed in native interceptor:', err);
+        throw err;
+      }
+    };
+
+    (window as any).__uneraFetchPatched = true;
+  }
+
+  // 2. Monkey-patch XMLHttpRequest
+  if (typeof XMLHttpRequest !== 'undefined' && !(window as any).__uneraXhrPatched) {
+    const originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (
+      method: string,
+      url: string | URL,
+      async: boolean = true,
+      username?: string | null,
+      password?: string | null
+    ) {
+      const urlStr = typeof url === 'string' ? url : url.toString();
+      const resolvedUrl = resolveApiUrl(urlStr);
+      return originalOpen.call(this, method, resolvedUrl, async, username, password);
+    };
+    (window as any).__uneraXhrPatched = true;
+  }
+}
 
 /**
  * Android and Native Bridge integration for UNERA.
@@ -11,17 +95,26 @@ import { Browser } from '@capacitor/browser';
  * while being a completely safe no-op on desktop and mobile web browsers.
  */
 export function initAndroidBridge(): void {
-  // Ensure we are running inside native environment (e.g. Capacitor Android APK)
+  // Flag native environment if detected
+  const native = isNativeApp();
+
+  if (typeof window !== 'undefined') {
+    if (native) {
+      (window as any).UNERA_IS_NATIVE_APP = true;
+    }
+  }
+
+  // Always configure network interceptor if running in native app
+  if (native) {
+    setupNativeNetworkInterceptor();
+  }
+
+  // Ensure we are running inside native Capacitor environment
   if (!Capacitor.isNativePlatform()) {
     return;
   }
 
   console.log('📱 Initializing UNERA Android Native Bridge');
-
-  // Mark native environment globally
-  if (typeof window !== 'undefined') {
-    (window as any).UNERA_IS_NATIVE_APP = true;
-  }
 
   // 1. Configure Status Bar
   try {
@@ -35,7 +128,7 @@ export function initAndroidBridge(): void {
   try {
     setTimeout(() => {
       SplashScreen.hide().catch(() => {});
-    }, 500);
+    }, 800);
   } catch (err) {
     console.debug('SplashScreen hide error:', err);
   }
@@ -47,14 +140,9 @@ export function initAndroidBridge(): void {
       const activeCloseButton = document.querySelector<HTMLElement>('[data-modal-close], button[aria-label="Close"], button.modal-close');
       if (activeCloseButton) {
         activeCloseButton.click();
-        return;
-      }
-
-      // Check if browser navigation history exists
-      if (canGoBack || (typeof window !== 'undefined' && window.history.length > 1)) {
+      } else if (canGoBack || (typeof window !== 'undefined' && window.history.length > 1)) {
         window.history.back();
       } else {
-        // No further history: exit application cleanly
         App.exitApp();
       }
     });
@@ -97,7 +185,6 @@ export function initAndroidBridge(): void {
       if (!target || !target.href) return;
 
       const href = target.href;
-      // If external link (not internal origin or unera.social)
       if (href.startsWith('http') && !href.includes(window.location.host) && !href.includes('unera.social')) {
         e.preventDefault();
         Browser.open({ url: href }).catch(() => {

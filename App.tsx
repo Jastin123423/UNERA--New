@@ -53,6 +53,7 @@ import {
 import { TrendingUp } from 'lucide-react';
 import { useLanguage } from './contexts/LanguageContext';
 import { buildImageUploadBundle } from './utils/imageCompression';
+import { resolveApiUrl } from './utils/api';
 import {
   User,
   Post as PostType,
@@ -2097,6 +2098,7 @@ const toBlobUrl = async (remoteUrl: string): Promise<string> => {
 };
 
 const apiFetch = async (url: string, options: RequestInit = {}) => {
+  const targetUrl = resolveApiUrl(url);
   const headers: HeadersInit = {
     Accept: 'application/json',
     ...(options.headers || {}),
@@ -2109,7 +2111,7 @@ const apiFetch = async (url: string, options: RequestInit = {}) => {
   const timeoutId = setTimeout(() => controller.abort(), 20000);
 
   try {
-    const res = await fetch(url, { ...options, headers, signal: controller.signal });
+    const res = await fetch(targetUrl, { ...options, headers, signal: controller.signal });
 
     const contentType = res.headers.get('content-type') || '';
     let data: any = null;

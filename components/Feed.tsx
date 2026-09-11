@@ -27,6 +27,7 @@ import { CreateEventModal } from './Events';
 import { performPostAction } from '../postActionRegistry';
 import { PostMenu } from './Post/PostMenu';
 import { buildImageUploadBundle } from '../utils/imageCompression';
+import { resolveApiUrl } from '../utils/api';
 //====================TYPE DEFINITION =============
 export type FeedItem =
   | { kind: 'post'; data: any; created_at?: string }
@@ -508,7 +509,8 @@ const interleaveFeedItems = (
   const timeoutId = setTimeout(() => controller.abort(), 20000);
 
   try {
-    const res = await fetch(url, {
+    const targetUrl = resolveApiUrl(url);
+    const res = await fetch(targetUrl, {
       ...options,
       headers,
       signal: controller.signal,

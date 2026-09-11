@@ -6,7 +6,7 @@ import AppRouter from './AppRouter';  // ✅ Changed from App to AppRouter
 
 import { LanguageProvider } from './contexts/LanguageContext';
 import { setupUneraPush } from './firebase';
-import { initAndroidBridge } from './utils/androidBridge';
+import { initAndroidBridge, isNativeApp } from './utils/androidBridge';
 
 // Initialize native bridge features when on Android
 initAndroidBridge();
@@ -38,7 +38,7 @@ root.render(
    UNERA SERVICE WORKER
 ========================================= */
 
-if ('serviceWorker' in navigator) {
+if (!isNativeApp() && 'serviceWorker' in navigator) {
 
   window.addEventListener(
     'load',

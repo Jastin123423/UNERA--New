@@ -12,6 +12,13 @@ const config: CapacitorConfig = {
   server: {
     androidScheme: 'https',
     cleartext: true,
+    allowNavigation: [
+      'unera.social',
+      '*.unera.social',
+      'media.unera.social',
+      'images.unsplash.com',
+      'ui-avatars.com',
+    ],
   },
   plugins: {
     SplashScreen: {

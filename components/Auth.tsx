@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { User } from '../types';
+import { getApiBaseUrl } from '../utils/api';
 
 /* =========================
    API Helpers
 ========================= */
 
-const API_BASE =
-  (import.meta as any).env?.VITE_API_BASE_URL?.replace(/\/$/, '') || '';
+const API_BASE = getApiBaseUrl();
 
 type AuthResponse = {
   success?: boolean;
