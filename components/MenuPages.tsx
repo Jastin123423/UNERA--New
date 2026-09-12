@@ -11,10 +11,11 @@ interface SuggestedProfilesPageProps {
     users: User[];
     onFollow: (id: number) => void;
     onProfileClick: (id: number) => void;
+    onBack?: () => void;
 }
 
 export const SuggestedProfilesPage: React.FC<SuggestedProfilesPageProps> = ({ 
-    currentUser, users, onFollow, onProfileClick 
+    currentUser, users, onFollow, onProfileClick, onBack 
 }) => {
     const [hiddenUserIds, setHiddenUserIds] = useState<number[]>([]);
 
@@ -41,7 +42,18 @@ export const SuggestedProfilesPage: React.FC<SuggestedProfilesPageProps> = ({
 
     return (
         <div className="w-full max-w-[700px] mx-auto p-4 font-sans pb-20 animate-fade-in">
-            <h2 className="text-2xl font-bold text-[#E4E6EB] mb-6">Discover People</h2>
+            <div className="flex items-center gap-3 mb-6">
+                {onBack && (
+                    <button
+                        onClick={onBack}
+                        className="w-10 h-10 rounded-full bg-[#242526] hover:bg-[#3A3B3C] border border-[#3E4042] text-[#E4E6EB] flex items-center justify-center transition-colors shadow-sm shrink-0"
+                        aria-label="Back"
+                    >
+                        <i className="fas fa-arrow-left text-lg"></i>
+                    </button>
+                )}
+                <h2 className="text-2xl font-bold text-[#E4E6EB]">Discover People</h2>
+            </div>
             {availableUsers.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {availableUsers.slice(0, 12).map(({ user, reason }) => (
@@ -79,6 +91,7 @@ interface BirthdaysPageProps {
     users: User[]; 
     onMessage: (id: number) => void;
     onProfileClick: (id: number) => void;
+    onBack?: () => void;
 }
 
 export const BirthdaysPage: React.FC<BirthdaysPageProps> = ({
@@ -86,6 +99,7 @@ export const BirthdaysPage: React.FC<BirthdaysPageProps> = ({
   users,
   onMessage,
   onProfileClick,
+  onBack,
 }) => {
   const today = new Date();
   const currentMonth = today.getMonth();
@@ -112,7 +126,16 @@ export const BirthdaysPage: React.FC<BirthdaysPageProps> = ({
   return (
     <div className="w-full max-w-[800px] mx-auto p-4 md:p-6 font-sans pb-20 animate-fade-in">
       <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-gradient-to-tr from-[#FF0080] to-[#7928CA] rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3">
+        {onBack && (
+          <button
+            onClick={onBack}
+            className="w-10 h-10 rounded-full bg-[#242526] hover:bg-[#3A3B3C] border border-[#3E4042] text-[#E4E6EB] flex items-center justify-center transition-colors shadow-sm shrink-0"
+            aria-label="Back"
+          >
+            <i className="fas fa-arrow-left text-lg"></i>
+          </button>
+        )}
+        <div className="w-14 h-14 bg-gradient-to-tr from-[#FF0080] to-[#7928CA] rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3 shrink-0">
           <i className="fas fa-birthday-cake text-white text-2xl"></i>
         </div>
         <div>
@@ -188,6 +211,7 @@ export const MemoriesPage = ({
   onVideoClick,
   onPlayAudioTrack,
   onHashtagClick,
+  onBack,
 }: any) => {
   // ---- Defensive helpers (avoid blank screen) ----
   const safeArray = <T,>(v: any): T[] => (Array.isArray(v) ? v : []);
@@ -343,7 +367,16 @@ export const MemoriesPage = ({
   return (
     <div className="w-full max-w-[900px] mx-auto p-4 md:p-6 font-sans pb-20 animate-fade-in">
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-14 h-14 bg-gradient-to-tr from-[#1877F2] to-[#00C6FF] rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3">
+        {onBack && (
+          <button
+            onClick={onBack}
+            className="w-10 h-10 rounded-full bg-[#242526] hover:bg-[#3A3B3C] border border-[#3E4042] text-[#E4E6EB] flex items-center justify-center transition-colors shadow-sm shrink-0"
+            aria-label="Back"
+          >
+            <i className="fas fa-arrow-left text-lg"></i>
+          </button>
+        )}
+        <div className="w-14 h-14 bg-gradient-to-tr from-[#1877F2] to-[#00C6FF] rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3 shrink-0">
           <i className="fas fa-history text-white text-2xl"></i>
         </div>
         <div className="min-w-0">

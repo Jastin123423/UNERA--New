@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import type { Song, AudioTrack, User, ReactionType } from '../types';
+import {
+  getCachedComments,
+  setCachedComments,
+  addCachedComment,
+  getCachedSongs,
+  setCachedSongs,
+} from '../utils/dataCache';
 
 /* =========================================================
    CONSTANTS & DEFAULTS
@@ -652,21 +659,34 @@ export const CommentsSheet: React.FC<{
   onProfileClick: (id: number) => void;
   onCommentAdded?: () => void;
 }> = ({ isOpen, onClose, track, currentUser, users, onProfileClick, onCommentAdded }) => {
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<any[]>(() => {
+    if (!track?.id) return [];
+    const cached = getCachedComments('song', track.id);
+    return cached?.data || [];
+  });
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const fetchComments = useCallback(async () => {
+  const fetchComments = useCallback(async (force = false) => {
     if (!track?.id) return;
-    setLoading(true);
+    const cached = getCachedComments('song', track.id);
+    if (!force && cached && cached.data.length > 0) {
+      setComments(cached.data);
+      if (cached.isFresh) {
+        return; // Fresh cache, no need to re-query network
+      }
+    }
+    if (!cached || cached.data.length === 0) {
+      setLoading(true);
+    }
     try {
       const endpoint = `/api/songs/${track.id}/comments`;
-      
       const res = await apiJson<any[]>(endpoint, { method: 'GET' });
-      if (res.success) {
-        setComments(res.data || []);
+      if (res.success && Array.isArray(res.data)) {
+        setComments(res.data);
+        setCachedComments('song', track.id, res.data);
       }
     } catch (error) {
       console.error('Failed to fetch comments:', error);
@@ -677,6 +697,11 @@ export const CommentsSheet: React.FC<{
 
   useEffect(() => {
     if (isOpen && track?.id) {
+      // Rehydrate instantly from cache
+      const cached = getCachedComments('song', track.id);
+      if (cached?.data?.length) {
+        setComments(cached.data);
+      }
       fetchComments();
     }
   }, [isOpen, track?.id, fetchComments]);
@@ -686,17 +711,30 @@ export const CommentsSheet: React.FC<{
     if (!text.trim() || !currentUser || !track?.id) return;
 
     setSubmitting(true);
+    const newCommentText = text.trim();
+    const optimisticComment = {
+      id: Date.now(),
+      song_id: track.id,
+      user_id: currentUser.id,
+      text: newCommentText,
+      created_at: new Date().toISOString(),
+      user: currentUser,
+    };
+
+    setComments((prev) => [optimisticComment, ...prev]);
+    addCachedComment('song', track.id, optimisticComment);
+    setText('');
+
     try {
       const endpoint = `/api/songs/${track.id}/comment`;
       
       const res = await apiJson<any>(endpoint, {
         method: 'POST',
-        body: JSON.stringify({ user_id: currentUser.id, text: text.trim() }),
+        body: JSON.stringify({ user_id: currentUser.id, text: newCommentText }),
       });
 
       if (res.success) {
-        setText('');
-        fetchComments();
+        fetchComments(true);
         onCommentAdded?.();
       }
     } catch (error) {
@@ -2621,6 +2659,7 @@ interface MusicSystemProps {
   onReact?: (track: AudioTrack, type: ReactionType) => void;
   onOpenComments?: (track: AudioTrack) => void;
   onShare?: (track: AudioTrack) => void;
+  onBack?: () => void;
 }
 
 const MusicSystem: React.FC<MusicSystemProps> = ({ 
@@ -2644,6 +2683,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
   onReact,
   onOpenComments,
   onShare,
+  onBack,
 }) => {
   const [view, setView] = useState<'music' | 'upload' | 'dashboard' | 'artist' | 'albums' | 'album'>('music');
   const [searchQuery, setSearchQuery] = useState('');
@@ -2651,7 +2691,10 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
   const [selectedAlbum, setSelectedAlbum] = useState<string | null>(null);
   const [heroIndex, setHeroIndex] = useState(0);
 
-  const [songs, setSongs] = useState<Song[]>([]);
+  const [songs, setSongs] = useState<Song[]>(() => {
+    const cached = getCachedSongs();
+    return Array.isArray(cached) && cached.length > 0 ? cached : [];
+  });
   const [loadingSongs, setLoadingSongs] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -2873,16 +2916,23 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
   }, [currentUser, likedTracks, onToggleLike]);
 
   const fetchSongs = useCallback(async () => {
-    setLoadingSongs(true);
+    const cached = getCachedSongs();
+    if (!cached || cached.length === 0) {
+      setLoadingSongs(true);
+    }
     setError(null);
     const res = await apiJson<any[]>('/api/songs', { method: 'GET' });
     if (!res.success) {
-      setError(res.error);
+      if (!cached || cached.length === 0) {
+        setError(res.error);
+      }
       setLoadingSongs(false);
       return;
     }
     const arr = Array.isArray(res.data) ? res.data : (res.data as any)?.results || [];
-    setSongs(arr.map(mapSongFromApi));
+    const mapped = arr.map(mapSongFromApi);
+    setSongs(mapped);
+    setCachedSongs(mapped);
     setLoadingSongs(false);
   }, []);
 
@@ -2983,7 +3033,24 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white font-sans">
       {/* Navigation Tabs */}
-      <div className="sticky top-14 bg-[#0A0A0A]/95 backdrop-blur-md z-30 px-4 py-4 border-b border-[#222] flex gap-6 overflow-x-auto scrollbar-hide">
+      <div className="sticky top-14 bg-[#0A0A0A]/95 backdrop-blur-md z-30 px-4 py-3 border-b border-[#222] flex items-center gap-4 overflow-x-auto scrollbar-hide">
+        {/* Back Button */}
+        <button
+          onClick={() => {
+            if (view !== 'music') {
+              setView('music');
+            } else if (onBack) {
+              onBack();
+            } else if (typeof window !== 'undefined' && window.history.length > 1) {
+              window.history.back();
+            }
+          }}
+          className="w-9 h-9 rounded-full bg-[#1A1D24] hover:bg-[#2B313D] border border-white/10 text-white flex items-center justify-center transition-colors shadow-sm shrink-0"
+          aria-label="Back"
+        >
+          <i className="fas fa-arrow-left text-sm"></i>
+        </button>
+
         <button onClick={() => setView('music')} className={`cursor-pointer font-bold text-sm whitespace-nowrap ${view === 'music' ? 'text-[#1877F2]' : 'text-gray-400 hover:text-white'}`}>
           MUSIC
         </button>

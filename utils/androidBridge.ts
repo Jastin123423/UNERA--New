@@ -136,11 +136,27 @@ export function initAndroidBridge(): void {
   // 3. Android Back Button Handling
   try {
     App.addListener('backButton', ({ canGoBack }) => {
-      // Check if any open modal exists that can be closed
-      const activeCloseButton = document.querySelector<HTMLElement>('[data-modal-close], button[aria-label="Close"], button.modal-close');
+      // 1. Check if React registered a global modal/back handler
+      if (typeof (window as any).__uneraHandleBack === 'function') {
+        try {
+          const handled = (window as any).__uneraHandleBack();
+          if (handled) return;
+        } catch (err) {
+          console.debug('Error in __uneraHandleBack:', err);
+        }
+      }
+
+      // 2. Check if any open modal exists that can be closed
+      const activeCloseButton = document.querySelector<HTMLElement>(
+        '[data-modal-close], button[aria-label="Close"], button.modal-close, button[aria-label="Back"]'
+      );
       if (activeCloseButton) {
         activeCloseButton.click();
-      } else if (canGoBack || (typeof window !== 'undefined' && window.history.length > 1)) {
+        return;
+      }
+
+      // 3. Navigate back in web history if available
+      if (canGoBack || (typeof window !== 'undefined' && window.history.length > 1)) {
         window.history.back();
       } else {
         App.exitApp();

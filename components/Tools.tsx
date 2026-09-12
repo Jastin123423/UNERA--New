@@ -255,7 +255,7 @@ const ToolModal: React.FC<ToolModalProps> = ({ tool, onClose }) => {
     );
 };
 
-export const ToolsPage: React.FC = () => {
+export const ToolsPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
     const [activeTool, setActiveTool] = useState<Tool | null>(null);
 
     const categories = ['You May Like', 'AI Tools', 'PDF Tools', 'Image & Other'];
@@ -269,9 +269,20 @@ export const ToolsPage: React.FC = () => {
 
     return (
         <div className="w-full max-w-[800px] mx-auto min-h-screen bg-[#18191A] font-sans pb-24">
-            <div className="sticky top-14 bg-[#18191A]/95 backdrop-blur-md z-30 px-5 py-5 border-b border-[#3E4042]">
-                <h1 className="text-3xl font-black text-white tracking-tight">UNERA Tools</h1>
-                <p className="text-[#B0B3B8] text-sm mt-1 font-medium">Smart utilities for your everyday productivity.</p>
+            <div className="sticky top-14 bg-[#18191A]/95 backdrop-blur-md z-30 px-5 py-4 border-b border-[#3E4042] flex items-center gap-3">
+                {onBack && (
+                    <button
+                        onClick={onBack}
+                        className="w-10 h-10 rounded-full bg-[#242526] hover:bg-[#3A3B3C] border border-[#3E4042] text-[#E4E6EB] flex items-center justify-center transition-colors shadow-sm shrink-0"
+                        aria-label="Back"
+                    >
+                        <i className="fas fa-arrow-left text-lg"></i>
+                    </button>
+                )}
+                <div>
+                    <h1 className="text-2xl font-black text-white tracking-tight">UNERA Tools</h1>
+                    <p className="text-[#B0B3B8] text-xs font-medium">Smart utilities for your everyday productivity.</p>
+                </div>
             </div>
 
             <div className="p-4 space-y-8 mt-2">

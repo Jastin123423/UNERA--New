@@ -253,6 +253,7 @@ interface UserProfileProps {
 
   // Open Reel handler
   onOpenReel?: (reelId: number | string) => void;
+  onBack?: () => void;
 }
 
 export const UserProfile: React.FC<UserProfileProps> = ({
@@ -302,6 +303,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
   isChatsListOpen,
   peopleSuggestions = [],
   onOpenReel,
+  onBack,
 }) => {
   // Get MarketplaceContext
   const marketplaceContext = useContext(MarketplaceContext);
@@ -1504,6 +1506,27 @@ export const UserProfile: React.FC<UserProfileProps> = ({
 
   return (
     <div className="w-full bg-[#18191A] min-h-screen">
+      {/* Profile Top Navigation Bar with Back Button */}
+      <div className="sticky top-14 z-30 bg-[#242526]/95 backdrop-blur-md border-b border-[#3E4042] px-4 py-2.5 flex items-center gap-3">
+        <button
+          onClick={() => {
+            if (onBack) {
+              onBack();
+            } else if (typeof window !== 'undefined' && window.history.length > 1) {
+              window.history.back();
+            }
+          }}
+          className="w-10 h-10 rounded-full bg-[#3A3B3C] hover:bg-[#4E4F50] text-[#E4E6EB] flex items-center justify-center transition-colors shadow-sm shrink-0"
+          aria-label="Back"
+        >
+          <i className="fas fa-arrow-left text-lg"></i>
+        </button>
+        <div className="min-w-0 flex-1">
+          <h2 className="text-[#E4E6EB] font-bold text-base truncate">{user.name || user.username}</h2>
+          <p className="text-[#B0B3B8] text-xs">@{user.username}</p>
+        </div>
+      </div>
+
       {/* File inputs for profile/cover images */}
       <input
         type="file"

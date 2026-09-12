@@ -10408,13 +10408,14 @@ feedLoadingMore={feedLoadingMore}
     onReact={handleMusicReact}
     onOpenComments={handleOpenMusicComments}
     onShare={handleMusicShare}
+    onBack={goBack}
   />
 )}                   
   
   
       
 
-        {view === 'tools' && <ToolsPage />}
+        {view === 'tools' && <ToolsPage onBack={goBack} />}
 
         {view === 'profiles' && (
           <SuggestedProfilesPage
@@ -10424,6 +10425,7 @@ feedLoadingMore={feedLoadingMore}
             onProfileClick={(id) => openProfile(id)}
             checkIsFollowing={checkIsFollowing}
             followLoading={followLoading}
+            onBack={goBack}
           />
         )}
 
@@ -10440,6 +10442,7 @@ feedLoadingMore={feedLoadingMore}
                 if (!requireAuth('Creating events')) return;
                 setShowCreateEventModal(true);
               }}
+              onNavigateBack={goBack}
             />
           </ErrorBoundary>
         )}
@@ -10456,6 +10459,7 @@ feedLoadingMore={feedLoadingMore}
             onProfileClick={(id) => openProfile(id)}
             onFollow={followUser}
             checkIsFollowing={checkIsFollowing}
+            onBack={goBack}
           />
         )}
 
@@ -10481,6 +10485,7 @@ feedLoadingMore={feedLoadingMore}
             groups={groups}
             brands={brands}
             chats={chats}
+            onBack={goBack}
           />
         )}
 {view === 'settings' && currentUser && (
@@ -10590,6 +10595,7 @@ feedLoadingMore={feedLoadingMore}
             activeChatRecipient={activeChatUser}
             onOpenChatsList={handleOpenChatsList}
             isChatsListOpen={isChatsListOpen}
+            onBack={goBack}
           />
         )}
 

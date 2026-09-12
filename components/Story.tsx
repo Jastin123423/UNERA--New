@@ -11,6 +11,10 @@ import Filters, {
   UneraFilterOverlay, 
   getUneraFilterById 
 } from './filters';
+import {
+  getCachedComments,
+  setCachedComments,
+} from '../utils/dataCache';
 
 // -------------------- NATIVE APP HELPERS --------------------
 const isUneraNativeApp = (): boolean => {
@@ -44,11 +48,20 @@ type NativeMediaMeta = {
 const storyCommentsCache = new Map<number, any[]>();
 
 const setStoryCommentsCache = (storyId: number, comments: any[]) => {
-  storyCommentsCache.set(Number(storyId), Array.isArray(comments) ? comments : []);
+  const arr = Array.isArray(comments) ? comments : [];
+  storyCommentsCache.set(Number(storyId), arr);
+  setCachedComments('story', storyId, arr);
 };
 
 const getStoryCommentsCache = (storyId: number) => {
-  return storyCommentsCache.get(Number(storyId)) || null;
+  const inMem = storyCommentsCache.get(Number(storyId));
+  if (inMem && inMem.length > 0) return inMem;
+  const stored = getCachedComments('story', storyId);
+  if (stored?.data && stored.data.length > 0) {
+    storyCommentsCache.set(Number(storyId), stored.data);
+    return stored.data;
+  }
+  return null;
 };
 
 // -------------------- TYPES --------------------

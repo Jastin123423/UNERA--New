@@ -28,6 +28,12 @@ import { performPostAction } from '../postActionRegistry';
 import { PostMenu } from './Post/PostMenu';
 import { buildImageUploadBundle } from '../utils/imageCompression';
 import { resolveApiUrl } from '../utils/api';
+import {
+  getCachedComments,
+  setCachedComments,
+  addCachedComment,
+  updateCachedComment,
+} from '../utils/dataCache';
 //====================TYPE DEFINITION =============
 export type FeedItem =
   | { kind: 'post'; data: any; created_at?: string }
@@ -7413,8 +7419,14 @@ export const CommentsSheet = memo(
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
 
+  const itemType = getFeedItemType(p);
   const [text, setText] = useState('');
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<any[]>(() => {
+    const cached = getCachedComments(itemType, postId);
+    if (cached?.data?.length) return cached.data;
+    const postComments = Array.isArray(p.comments) ? p.comments : [];
+    return postComments;
+  });
   const [replyTo, setReplyTo] = useState<any | null>(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [expandedThreads, setExpandedThreads] = useState<Record<string, boolean>>({});
@@ -7652,6 +7664,11 @@ export const CommentsSheet = memo(
     if (onLikeComment) {
       onLikeComment(comment.id);
     }
+    updateCachedComment(itemType, postId, comment.id, (c) => ({
+      ...c,
+      liked_by_me: optimisticLiked,
+      likes_count: optimisticCount,
+    }));
 
     try {
       const endpoint = getLikeEndpoint(comment.id);
@@ -7661,6 +7678,11 @@ export const CommentsSheet = memo(
       });
     } catch (error) {
       console.error('Failed to like comment:', error);
+      updateCachedComment(itemType, postId, comment.id, (c) => ({
+        ...c,
+        liked_by_me: !optimisticLiked,
+        likes_count: comment.likes_count || 0,
+      }));
       setComments((prev) =>
         prev.map((c) =>
           c.id === comment.id
@@ -7695,11 +7717,7 @@ export const CommentsSheet = memo(
 
       if (arr.length > 0) {
         setComments(arr);
-        commentsCache.set(postId, {
-          data: arr,
-          timestamp: Date.now(),
-          postId,
-        });
+        setCachedComments(itemType, postId, arr);
       }
     } catch (error: any) {
       if (error.name === 'AbortError') {
@@ -7712,22 +7730,21 @@ export const CommentsSheet = memo(
   // Initialize comments
   useEffect(() => {
     const initializeComments = async () => {
-      const cached = commentsCache.get(postId);
-      if (cached) {
+      const cached = getCachedComments(itemType, postId);
+      if (cached && cached.data.length > 0) {
         setComments(cached.data);
       }
 
       const postComments = Array.isArray(p.comments) ? p.comments : [];
       if (postComments.length > 0 && (!cached || postComments.length > cached.data.length)) {
         setComments(postComments);
-        commentsCache.set(postId, {
-          data: postComments,
-          timestamp: Date.now(),
-          postId,
-        });
+        setCachedComments(itemType, postId, postComments);
       }
 
-      fetchCommentsSilently();
+      // Only fetch if stale (> 5 mins) or no cache
+      if (!cached || !cached.isFresh || cached.data.length === 0) {
+        fetchCommentsSilently();
+      }
     };
 
     initializeComments();
@@ -7737,7 +7754,7 @@ export const CommentsSheet = memo(
         abortControllerRef.current.abort();
       }
     };
-  }, [postId, p.comments]);
+  }, [postId, p.comments, itemType]);
 
   // Build comment threads
   const idKey = (v: any) => String(v ?? '').trim();
@@ -7822,12 +7839,7 @@ export const CommentsSheet = memo(
 
     setComments((prev) => {
       const next = [...prev, optimisticComment];
-      const allComments = commentsCache.get(postId)?.data || [];
-      commentsCache.set(postId, {
-        data: [...allComments, optimisticComment],
-        timestamp: Date.now(),
-        postId,
-      });
+      addCachedComment(itemType, postId, optimisticComment);
       return next;
     });
 
@@ -7882,15 +7894,15 @@ export const CommentsSheet = memo(
   // Refresh comments on window focus
   useEffect(() => {
     const handleFocus = () => {
-      const cached = commentsCache.get(postId);
-      if (cached && Date.now() - cached.timestamp > 30000) {
+      const cached = getCachedComments(itemType, postId);
+      if (!cached || !cached.isFresh) {
         fetchCommentsSilently();
       }
     };
 
     window.addEventListener('focus', handleFocus);
     return () => window.removeEventListener('focus', handleFocus);
-  }, [postId]);
+  }, [postId, itemType]);
 
   // Render single comment (UPDATED with Facebook/Reels style)
   const renderOneComment = (comment: any, isReply: boolean = false) => {
