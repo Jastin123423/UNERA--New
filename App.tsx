@@ -10095,9 +10095,9 @@ return (
       }}
     />
 
-    <div className="flex justify-center w-full max-w-[1920px] mx-auto relative flex-1 pb-20">
+    <div className="flex justify-center w-full max-w-[1920px] mx-auto relative flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))]">
       {currentUser && (
-        <div className="sticky top-14 h-[calc(100vh-56px)] z-20 hidden lg:block">
+        <div className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] h-[calc(100vh-3.5rem-env(safe-area-inset-top,0px))] z-20 hidden lg:block">
           <Sidebar
             currentUser={currentUser}
             onProfileClick={(id) => openProfile(id)}
@@ -10832,7 +10832,7 @@ feedLoadingMore={feedLoadingMore}
       </div>
 
       {currentUser && (
-        <div className="sticky top-14 h-[calc(100vh-56px)] z-20 hidden xl:block pl-4">
+        <div className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] h-[calc(100vh-3.5rem-env(safe-area-inset-top,0px))] z-20 hidden xl:block pl-4">
           <RightSidebar
             contacts={users.filter((u) => u.id !== currentUser.id)}
             onProfileClick={(id) => openProfile(id)}

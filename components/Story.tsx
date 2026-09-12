@@ -885,7 +885,7 @@ export const StoryCommentsSheet: React.FC<StoryCommentsSheetProps> = ({
           onClick={() => author.uid && onProfileClick(author.uid)}
         />
         <div className="flex-1 min-w-0">
-          <div className="bg-[#3A3B3C] rounded-2xl px-3 py-2">
+          <div className="bg-[#0F172A] border border-[#1E293B] rounded-2xl px-3 py-2">
             <div className="flex items-center gap-2 flex-wrap">
               <span
                 className="text-[#E4E6EB] font-bold text-[14px] cursor-pointer hover:underline"
@@ -944,12 +944,12 @@ export const StoryCommentsSheet: React.FC<StoryCommentsSheetProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[500] bg-[#18191A] flex flex-col">
-      <div className="p-4 border-b border-[#3E4042] flex items-center justify-between bg-[#242526] sticky top-0 z-30">
+    <div className="fixed inset-0 z-[500] bg-[#050B18] flex flex-col">
+      <div className="p-4 border-b border-[#1E293B] flex items-center justify-between bg-[#0B1120] sticky top-0 z-30">
         <div className="flex items-center gap-3">
           <button
             type="button"
-            className="w-10 h-10 rounded-full hover:bg-[#3A3B3C] flex items-center justify-center transition-colors"
+            className="w-10 h-10 rounded-full hover:bg-[#1E293B] flex items-center justify-center transition-colors"
             onClick={onClose}
             aria-label="Back"
           >
@@ -998,7 +998,7 @@ export const StoryCommentsSheet: React.FC<StoryCommentsSheetProps> = ({
                   
                   {visibleReplies.map((reply) => (
                     <div key={reply.id} className="ml-12 relative">
-                      <div className="absolute -left-6 top-0 bottom-0 w-[2px] bg-[#3E4042] rounded-full" />
+                      <div className="absolute -left-6 top-0 bottom-0 w-[2px] bg-[#1E293B] rounded-full" />
                       {renderComment(reply, true, 1)}
                     </div>
                   ))}
@@ -1020,7 +1020,7 @@ export const StoryCommentsSheet: React.FC<StoryCommentsSheetProps> = ({
       </div>
 
       {replyTo && (
-        <div className="mx-4 mb-2 p-2 bg-[#3A3B3C] rounded-lg flex items-center justify-between">
+        <div className="mx-4 mb-2 p-2 bg-[#0F172A] border border-[#1E293B] rounded-lg flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-[#B0B3B8] text-[13px]">Replying to</span>
             <span className="text-[#1877F2] font-bold text-[13px]">
@@ -1033,7 +1033,7 @@ export const StoryCommentsSheet: React.FC<StoryCommentsSheetProps> = ({
         </div>
       )}
 
-      <div className="p-4 border-t border-[#3E4042] bg-[#242526] sticky bottom-0">
+      <div className="p-4 border-t border-[#1E293B] bg-[#0B1120] sticky bottom-0">
         <form className="flex gap-3 items-center" onSubmit={handleSubmit}>
           <img
             src={avatarFrom(currentUser)}
@@ -1044,7 +1044,7 @@ export const StoryCommentsSheet: React.FC<StoryCommentsSheetProps> = ({
             <input
               ref={inputRef}
               type="text"
-              className="w-full bg-[#3A3B3C] text-white rounded-full px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#1877F2] transition-all text-[15px]"
+              className="w-full bg-[#070D1D] border border-[#1E293B] text-white rounded-full px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#1877F2] transition-all text-[15px]"
               placeholder={replyTo ? `Reply to ${resolveAuthor(replyTo).name}...` : "Write a discussion..."}
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -1884,7 +1884,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
   const displayMediaUrl = getDisplayMediaUrl(story);
 
   return (
-    <div className="fixed inset-0 z-[250] bg-black animate-fade-in">
+    <div className="fixed inset-0 z-[250] bg-[#050B18] animate-fade-in">
       <div
         className="absolute inset-0 opacity-30 bg-cover bg-center blur-3xl"
         style={{
@@ -1905,7 +1905,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
       </button>
 
       <div
-        className="relative w-full h-full bg-black overflow-hidden flex flex-col touch-none"
+        className="relative w-full h-full bg-[#050B18] overflow-hidden flex flex-col touch-none"
         style={{ touchAction: 'none', overscrollBehavior: 'contain' }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -1993,7 +1993,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
                     onFollow(frozenAuthor.id);
                   }}
                   className={`px-3 py-1.5 rounded-full text-xs font-bold ${
-                    isFollowing ? 'bg-[#3A3B3C] text-white' : 'bg-[#1877F2] text-white'
+                    isFollowing ? 'bg-[#1E293B] text-white' : 'bg-[#1877F2] text-white'
                   } hover:opacity-90 transition-all active:scale-95 border-none`}
                 >
                   {isFollowing ? 'Following' : 'Follow'}
@@ -2176,7 +2176,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
 
           {showReactions && !isAuthor && (
             <div
-              className="absolute bottom-24 left-1/2 -translate-x-1/2 bg-black/80 backdrop-blur-lg rounded-full p-2 flex gap-2 z-[200] border border-white/10 pointer-events-auto"
+              className="absolute bottom-24 left-1/2 -translate-x-1/2 bg-[#0F172A]/90 backdrop-blur-lg rounded-full p-2 flex gap-2 z-[200] border border-[#1E293B] pointer-events-auto"
               data-no-nav="true"
             >
               {['like', 'love', 'wow', 'haha', 'sad', 'angry'].map((reaction) => (
@@ -2196,7 +2196,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
 
         {/* Horizontal Bottom Actions - React, Discuss, Share */}
         <div 
-          className="absolute bottom-0 left-0 right-0 p-3 z-20 bg-gradient-to-t from-black/80 to-transparent pt-10"
+          className="absolute bottom-0 left-0 right-0 p-3 z-20 bg-gradient-to-t from-[#050B18]/95 via-[#050B18]/60 to-transparent pt-10"
           data-no-nav="true"
         >
           {/* Reaction row with counts */}
@@ -2212,7 +2212,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
                   {topReactionEmojis.slice(0, 2).map((emoji, i) => (
                     <span
                       key={i}
-                      className="w-[22px] h-[22px] rounded-full bg-[#3A3B3C] border border-black flex items-center justify-center text-[14px]"
+                      className="w-[22px] h-[22px] rounded-full bg-[#0F172A] border border-[#1E293B] flex items-center justify-center text-[14px]"
                       style={{ zIndex: 10 - i }}
                     >
                       {emoji}
@@ -2282,8 +2282,8 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
             <div className="absolute inset-0" onClick={closeViewers} />
 
             <div className="relative w-full h-full flex items-center justify-center p-4 sm:p-8">
-              <div className="w-full max-w-[560px] bg-[#18191A] rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+              <div className="w-full max-w-[560px] bg-[#0F172A] rounded-2xl border border-[#1E293B] shadow-2xl overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-3 border-b border-[#1E293B]">
                   <div className="flex items-center gap-2">
                     <i className="fas fa-eye text-[#1877F2]"></i>
                     <h3 className="text-white font-black text-[16px]">Story Viewers</h3>
@@ -2349,7 +2349,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
                   </div>
                 )}
 
-                <div className="p-4 border-t border-white/10 flex justify-end">
+                <div className="p-4 border-t border-[#1E293B] flex justify-end">
                   <button
                     onClick={closeViewers}
                     className="px-6 py-2 rounded-full bg-[#1877F2] hover:bg-[#166FE5] text-white font-black"
@@ -2368,8 +2368,8 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
             <div className="absolute inset-0" onClick={() => setShowDeleteConfirm(false)} />
 
             <div className="relative w-full h-full flex items-center justify-center p-4">
-              <div className="w-full max-w-[400px] bg-[#18191A] rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+              <div className="w-full max-w-[400px] bg-[#0F172A] rounded-2xl border border-[#1E293B] shadow-2xl overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-3 border-b border-[#1E293B]">
                   <div className="flex items-center gap-2">
                     <i className="fas fa-trash text-[#F3425F]"></i>
                     <h3 className="text-white font-black text-[16px]">Delete Story</h3>
@@ -2603,7 +2603,7 @@ export const StoryReel: React.FC<StoryReelProps> = ({
         return (
           <div
             key={story.id}
-            className="min-w-[110px] sm:min-w-[140px] h-[210px] sm:h-[250px] relative rounded-2xl overflow-hidden cursor-pointer flex-shrink-0 group shadow-lg border border-white/10"
+            className="min-w-[110px] sm:min-w-[140px] h-[210px] sm:h-[250px] relative rounded-2xl overflow-hidden cursor-pointer flex-shrink-0 group shadow-lg border border-[#1E293B]"
             onClick={() => onViewStory(story)}
             role="button"
             tabIndex={0}
@@ -2675,7 +2675,7 @@ export const StoryReel: React.FC<StoryReelProps> = ({
                 <button
                   disabled={isLoading}
                   className={`w-7 h-7 rounded-full flex items-center justify-center text-white text-xs border ${
-                    isFollowing ? 'bg-[#3A3B3C] border-[#4E4F50]' : 'bg-[#1877F2] border-[#1877F2]'
+                    isFollowing ? 'bg-[#1E293B] border-[#1E293B]' : 'bg-[#1877F2] border-[#1877F2]'
                   } ${isLoading ? 'opacity-60' : 'hover:opacity-90'}`}
                   aria-label={isFollowing ? `Unfollow ${author.name}` : `Follow ${author.name}`}
                 >
@@ -3223,8 +3223,8 @@ export const CreateStoryModal: React.FC<CreateStoryModalProps> = ({
   };
 
   const renderMusicPicker = () => (
-    <div className="fixed inset-0 z-[900] bg-[#18191A] animate-slide-up flex flex-col font-sans">
-      <div className="p-4 border-b border-[#3E4042] flex justify-between items-center bg-[#242526]">
+    <div className="fixed inset-0 z-[900] bg-[#050B18] animate-slide-up flex flex-col font-sans">
+      <div className="p-4 border-b border-[#1E293B] flex justify-between items-center bg-[#0B1120]">
         <button onClick={() => setShowMusicPicker(false)} className="text-[#B0B3B8] font-bold">
           <i className="fas fa-chevron-down mr-2"></i>Close
         </button>
@@ -3236,7 +3236,7 @@ export const CreateStoryModal: React.FC<CreateStoryModalProps> = ({
         {/* Upload Music button - uses native picker */}
         <button
           onClick={handlePickStoryAudio}
-          className="p-4 bg-[#263951] rounded-xl flex items-center gap-4 cursor-pointer hover:bg-[#2A3F5A] transition-all border border-[#2D88FF]/20"
+          className="p-4 bg-[#0F172A] rounded-xl flex items-center gap-4 cursor-pointer hover:bg-[#1E293B] transition-all border border-[#1E293B]"
           aria-label="Upload music"
         >
           <div className="w-12 h-12 bg-[#1877F2] rounded-full flex items-center justify-center shadow-lg">
@@ -3257,7 +3257,7 @@ export const CreateStoryModal: React.FC<CreateStoryModalProps> = ({
           aria-label="Select audio file"
         />
 
-        <div className="h-px bg-[#3E4042] my-2"></div>
+        <div className="h-px bg-[#1E293B] my-2"></div>
         <p className="text-[#B0B3B8] text-xs font-bold uppercase tracking-widest px-1">
           UNERA Music Trends
         </p>
@@ -3266,7 +3266,7 @@ export const CreateStoryModal: React.FC<CreateStoryModalProps> = ({
           {songs.map((song) => (
             <div
               key={song.id}
-              className="p-3 bg-[#242526] hover:bg-[#3A3B3C] rounded-xl flex items-center gap-4 cursor-pointer transition-all border border-transparent hover:border-[#1877F2]/30"
+              className="p-3 bg-[#0F172A] hover:bg-[#1E293B] rounded-xl flex items-center gap-4 cursor-pointer transition-all border border-[#1E293B]"
             >
               <img src={song.cover_image_url} className="w-14 h-14 rounded-lg object-cover shadow-md" alt="" />
               <div className="flex-1 overflow-hidden">
@@ -3458,11 +3458,11 @@ export const CreateStoryModal: React.FC<CreateStoryModalProps> = ({
   }
 
   return (
-    <div className="fixed inset-0 z-[200] bg-black flex flex-col font-sans animate-fade-in text-white overflow-hidden">
-      <div className="flex justify-between items-center p-4 bg-black/60 backdrop-blur-lg absolute top-0 w-full z-40 border-b border-white/5">
+    <div className="fixed inset-0 z-[200] bg-[#050B18] flex flex-col font-sans animate-fade-in text-white overflow-hidden">
+      <div className="flex justify-between items-center p-4 bg-[#0B1120]/90 backdrop-blur-lg absolute top-0 w-full z-40 border-b border-[#1E293B]">
         <button
           onClick={onClose}
-          className="text-white font-bold text-sm bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition-all"
+          className="text-white font-bold text-sm bg-[#1E293B] px-4 py-2 rounded-full hover:bg-[#141E33] border border-[#1E293B] transition-all"
           aria-label="Discard and close"
         >
           Discard
@@ -3480,7 +3480,7 @@ export const CreateStoryModal: React.FC<CreateStoryModalProps> = ({
 
       <div
         className="flex-1 flex items-center justify-center relative overflow-hidden mt-16 mb-24"
-        style={{ background: mode === 'text' ? background : '#000' }}
+        style={{ background: mode === 'text' ? background : '#050B18' }}
       >
         {mode === 'text' ? (
           <textarea
@@ -3493,7 +3493,7 @@ export const CreateStoryModal: React.FC<CreateStoryModalProps> = ({
           />
         ) : (
           <div
-            className="w-full h-full flex items-center justify-center bg-[#000]"
+            className="w-full h-full flex items-center justify-center bg-[#050B18]"
             onClick={() => picks.length === 0 && handlePickStoryMedia()}
             role="button"
             tabIndex={0}
@@ -3547,7 +3547,7 @@ export const CreateStoryModal: React.FC<CreateStoryModalProps> = ({
               </div>
             ) : (
               <div className="text-center cursor-pointer group">
-                <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/20 transition-all">
+                <div className="w-20 h-20 bg-[#0F172A] border border-[#1E293B] rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#1E293B] transition-all">
                   <i className="fas fa-photo-video text-3xl text-white"></i>
                 </div>
                 <p className="font-black text-xl text-white">Select Photos / Videos</p>
@@ -3640,7 +3640,7 @@ export const CreateStoryModal: React.FC<CreateStoryModalProps> = ({
         )}
       </div>
 
-      <div className="absolute bottom-0 w-full bg-black/80 backdrop-blur-2xl border-t border-white/10 z-40 p-4 pb-8 flex flex-col gap-4">
+      <div className="absolute bottom-0 w-full bg-[#0B1120]/90 backdrop-blur-2xl border-t border-[#1E293B] z-40 p-4 pb-8 flex flex-col gap-4">
         {mode === 'text' && (
           <div className="flex gap-3 overflow-x-auto scrollbar-hide px-2 py-1">
             {STORY_COLORS.map((col, idx) => (
@@ -3660,7 +3660,7 @@ export const CreateStoryModal: React.FC<CreateStoryModalProps> = ({
         )}
 
         <div className="flex items-center justify-between px-2">
-          <div className="flex gap-2 bg-white/5 p-1 rounded-2xl border border-white/10">
+          <div className="flex gap-2 bg-[#070D1D] p-1 rounded-2xl border border-[#1E293B]">
             <button
               onClick={() => setMode('text')}
               className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all flex items-center gap-2 ${

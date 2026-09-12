@@ -5,7 +5,7 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
 
     <title>unera6</title>
@@ -18,8 +18,13 @@
     />
 
     <meta name="theme-color" content="#050B18" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#050B18" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#050B18" />
     <meta name="background-color" content="#050B18" />
 
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="application-name" content="UNERA" />
     <meta name="apple-mobile-web-app-title" content="UNERA" />
 
@@ -92,6 +97,16 @@
                             700: '#1E293B',
                             600: '#334155',
                         },
+                        carrot: {
+                            50: '#FFF7ED',
+                            100: '#FFEDD5',
+                            200: '#FED7AA',
+                            300: '#FDBA74',
+                            400: '#FB923C',
+                            500: '#F97316',
+                            600: '#EA580C',
+                            700: '#C2410C',
+                        },
                         primary: {
                             50: '#EFF6FF',
                             100: '#DBEAFE',
@@ -119,12 +134,35 @@
         :root {
             --unera-blue: #1877F2;
             --unera-blue-hover: #166FE5;
+            --unera-carrot: #F97316;
+            --unera-carrot-hover: #EA580C;
+            --unera-carrot-light: #FB923C;
+            --unera-carrot-dark: #C2410C;
             --unera-black: #050B18;
+            --unera-navy: #050B18;
+            --unera-navy-bar: #0B1120;
             --unera-surface: #0F172A;
             --unera-surface-2: #1E293B;
             --unera-border: #1E293B;
             --unera-text: #F8FAFC;
             --unera-muted: #94A3B8;
+
+            /* Native Android & iOS Safe Area Insets */
+            --sat: env(safe-area-inset-top, 0px);
+            --sab: env(safe-area-inset-bottom, 0px);
+            --sal: env(safe-area-inset-left, 0px);
+            --sar: env(safe-area-inset-right, 0px);
+        }
+
+        /* Edge-to-Edge System Bar Helpers */
+        .edge-to-edge-top {
+            padding-top: env(safe-area-inset-top, 0px);
+        }
+        .edge-to-edge-bottom {
+            padding-bottom: max(env(safe-area-inset-bottom, 0px), 0px);
+        }
+        .safe-bottom-content-pad {
+            padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
         }
 
         /* PALETTE REMAPPINGS FOR CONSISTENT DARK NAVY & UNERA BLUE */

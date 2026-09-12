@@ -328,7 +328,7 @@ const MusicFeedCard: React.FC<{
   return (
     <div className="w-[160px] sm:w-[175px] flex-shrink-0 snap-start">
       <div onClick={onPlay} className="group cursor-pointer">
-        <div className="relative rounded-xl overflow-hidden aspect-[1/1] bg-[#1A1A1A]">
+        <div className="relative rounded-xl overflow-hidden aspect-[1/1] bg-[#0B1120]">
           <img 
             src={song.cover || DEFAULT_MUSIC_COVER} 
             alt={song.title} 
@@ -389,7 +389,7 @@ const MusicFeedCard: React.FC<{
             {artistAvatar ? (
               <img src={artistAvatar} alt={artistName} className="w-4 h-4 rounded-full object-cover" />
             ) : null}
-            <span className="text-[#B8BCC7] text-sm truncate inline-flex items-center gap-1">
+            <span className="text-[#94A3B8] text-sm truncate inline-flex items-center gap-1">
               {artistName}
               {verified ? <i className="fas fa-check-circle text-[#1877F2] text-[10px]"></i> : null}
             </span>
@@ -582,7 +582,7 @@ const ReactionButton: React.FC<{
       onTouchCancel={handleTouchEnd}
     >
       {showPreview && (
-        <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-[#242526] rounded-full shadow-2xl p-3 border border-[#3E4042] z-50 reaction-preview">
+        <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-[#0F172A] rounded-full shadow-2xl p-3 border border-[#1E293B] z-50 reaction-preview">
           <div className="text-4xl">{previewEmoji}</div>
         </div>
       )}
@@ -590,13 +590,13 @@ const ReactionButton: React.FC<{
       {showDock && (
         <div
           ref={dockRef}
-          className="absolute -top-16 left-0 bg-[#242526] rounded-full shadow-2xl p-2 border border-[#3E4042] z-50 react-pop flex items-center"
+          className="absolute -top-16 left-0 bg-[#0F172A] rounded-full shadow-2xl p-2 border border-[#1E293B] z-50 react-pop flex items-center"
         >
           <div className="flex gap-1 overflow-x-auto max-w-[320px] scrollbar-hide px-1 py-1">
             {reactionConfig.map((r) => (
               <div
                 key={r.type}
-                className="text-3xl react-hover cursor-pointer p-1 rounded-full hover:bg-[#3A3B3C] transition-colors flex-shrink-0"
+                className="text-3xl react-hover cursor-pointer p-1 rounded-full hover:bg-[#1E293B] transition-colors flex-shrink-0"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDockReact(r.type as ReactionType);
@@ -615,7 +615,7 @@ const ReactionButton: React.FC<{
         onClick={handleClick}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        className={`w-full flex items-center justify-center gap-2 h-10 rounded hover:bg-[#3A3B3C] transition-all duration-200 active:scale-95 ${
+        className={`w-full flex items-center justify-center gap-2 h-10 rounded hover:bg-[#1E293B] transition-all duration-200 active:scale-95 ${
           isAnimating ? 'scale-110' : ''
         }`}
       >
@@ -636,7 +636,7 @@ const ReactionButton: React.FC<{
             <span className="flex items-center justify-center -mt-[1px]">
               <SparkReactIcon size={28} />
             </span>
-            <span className="text-[19px] font-bold text-[#B0B3B8]">
+            <span className="text-[19px] font-bold text-[#94A3B8]">
               {reactionCount > 0 ? formatCompactNumber(reactionCount) : 'React'}
             </span>
           </>
@@ -765,20 +765,20 @@ export const CommentsSheet: React.FC<{
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-black/50 flex items-end" onClick={onClose}>
+    <div className="fixed inset-0 z-[9999] bg-black/60 flex items-end" onClick={onClose}>
       <div 
-        className="w-full h-[72vh] bg-[#18191A] rounded-t-3xl flex flex-col overflow-hidden shadow-2xl"
+        className="w-full h-[72vh] bg-[#050B18] rounded-t-3xl flex flex-col overflow-hidden shadow-2xl border-t border-[#1E293B]"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="pt-3 pb-1 flex justify-center bg-[#242526]">
-          <div className="w-12 h-1.5 rounded-full bg-[#4B4C4F]"></div>
+        <div className="pt-3 pb-1 flex justify-center bg-[#0B1120]">
+          <div className="w-12 h-1.5 rounded-full bg-[#1E293B]"></div>
         </div>
 
-        <div className="p-4 border-b border-[#3E4042] flex items-center justify-between bg-[#242526] sticky top-0 z-30">
+        <div className="p-4 border-b border-[#1E293B] flex items-center justify-between bg-[#0B1120] sticky top-0 z-30">
           <div className="flex items-center gap-3">
             <button
               type="button"
-              className="w-10 h-10 rounded-full hover:bg-[#3A3B3C] flex items-center justify-center transition-colors"
+              className="w-10 h-10 rounded-full hover:bg-[#1E293B] flex items-center justify-center transition-colors"
               onClick={onClose}
               aria-label="Back"
             >
@@ -796,7 +796,7 @@ export const CommentsSheet: React.FC<{
         </div>
 
         <div className="flex-1 overflow-y-auto p-4">
-          <div className="flex items-center gap-3 mb-6 p-3 bg-[#3A3B3C] rounded-xl">
+          <div className="flex items-center gap-3 mb-6 p-3 bg-[#0F172A] border border-[#1E293B] rounded-xl">
             <div className="w-12 h-12 rounded-lg overflow-hidden">
               <img src={track.cover || DEFAULT_MUSIC_COVER} className="w-full h-full object-cover" alt="" />
             </div>
@@ -866,13 +866,13 @@ export const CommentsSheet: React.FC<{
           )}
         </div>
 
-        <div className="p-4 border-t border-[#3E4042] bg-[#242526] sticky bottom-0">
+        <div className="p-4 border-t border-[#1E293B] bg-[#0B1120] sticky bottom-0">
           <form className="flex gap-3 items-center" onSubmit={handleSubmit}>
             <div className="flex-1 relative">
               <input
                 ref={inputRef}
                 type="text"
-                className="w-full bg-[#3A3B3C] text-white rounded-full px-5 py-3 outline-none focus:ring-2 focus:ring-[#1877F2] transition-all text-[17px]"
+                className="w-full bg-[#070D1D] text-white rounded-full px-5 py-3 outline-none border border-[#1E293B] focus:border-[#1877F2] transition-all text-[17px]"
                 placeholder="Write a comment..."
                 value={text}
                 onChange={(e) => setText(e.target.value)}
@@ -980,17 +980,17 @@ const ShareBottomSheet: React.FC<{
       />
       <div
         ref={sheetRef}
-        className={`fixed bottom-0 left-0 right-0 z-[301] bg-[#242526] rounded-t-2xl shadow-2xl max-h-[85vh] flex flex-col transition-transform duration-300 ease-out ${
+        className={`fixed bottom-0 left-0 right-0 z-[301] bg-[#0F172A] rounded-t-2xl shadow-2xl max-h-[85vh] flex flex-col border-t border-[#1E293B] transition-transform duration-300 ease-out ${
           isAnimating ? 'translate-y-full' : 'translate-y-0'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-4 pb-2">
           <div className="flex justify-center mb-3">
-            <div className="w-10 h-1 bg-[#3E4042] rounded-full"></div>
+            <div className="w-10 h-1 bg-[#1E293B] rounded-full"></div>
           </div>
           
-          <div className="flex items-start gap-3 mb-4 p-3 bg-[#3A3B3C] rounded-xl">
+          <div className="flex items-start gap-3 mb-4 p-3 bg-[#0B1120] border border-[#1E293B] rounded-xl">
             <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0">
               <img src={track.cover || DEFAULT_MUSIC_COVER} alt={track.title} className="w-full h-full object-cover" />
             </div>
@@ -1007,7 +1007,7 @@ const ShareBottomSheet: React.FC<{
           <div className="space-y-1">
             <button
               onClick={() => handleShareAction('feed')}
-              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-[#3A3B3C] active:bg-[#4E4F50] transition-all duration-200 group"
+              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-[#1E293B] active:bg-[#141E33] transition-all duration-200 group"
             >
               <div className="w-10 h-10 rounded-full bg-[#1877F215] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                 <i className="fas fa-newspaper text-[#1877F2] text-lg"></i>
@@ -1021,7 +1021,7 @@ const ShareBottomSheet: React.FC<{
 
             <button
               onClick={() => handleShareAction('message')}
-              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-[#3A3B3C] active:bg-[#4E4F50] transition-all duration-200 group"
+              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-[#1E293B] active:bg-[#141E33] transition-all duration-200 group"
             >
               <div className="w-10 h-10 rounded-full bg-[#1877F215] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                 <i className="fas fa-comment-alt text-[#1877F2] text-lg"></i>
@@ -1039,7 +1039,7 @@ const ShareBottomSheet: React.FC<{
                 window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
                 closeSheet();
               }}
-              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-[#3A3B3C] active:bg-[#4E4F50] transition-all duration-200 group"
+              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-[#1E293B] active:bg-[#141E33] transition-all duration-200 group"
             >
               <div className="w-10 h-10 rounded-full bg-[#25D36615] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                 <i className="fab fa-whatsapp text-[#25D366] text-lg"></i>
@@ -1057,7 +1057,7 @@ const ShareBottomSheet: React.FC<{
                 alert('Link copied to clipboard!');
                 closeSheet();
               }}
-              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-[#3A3B3C] active:bg-[#4E4F50] transition-all duration-200 group"
+              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-[#1E293B] active:bg-[#141E33] transition-all duration-200 group"
             >
               <div className="w-10 h-10 rounded-full bg-[#1877F215] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                 <i className="fas fa-link text-[#1877F2] text-lg"></i>
@@ -1070,10 +1070,10 @@ const ShareBottomSheet: React.FC<{
           </div>
         </div>
 
-        <div className="p-4 pt-3 border-t border-[#3E4042]">
+        <div className="p-4 pt-3 border-t border-[#1E293B]">
           <button
             onClick={closeSheet}
-            className="w-full py-3 bg-[#3A3B3C] hover:bg-[#4E4F50] text-[#E4E6EB] font-semibold rounded-xl transition-colors text-[17px]"
+            className="w-full py-3 bg-[#1E293B] hover:bg-[#141E33] text-[#E4E6EB] font-semibold rounded-xl transition-colors text-[17px]"
           >
             Cancel
           </button>
@@ -1700,12 +1700,12 @@ useEffect(() => {
   return (
     <>
       <div
-        className={`fixed bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] to-[#1A1A1A] transition-all duration-500 z-[160] shadow-2xl border-t border-[#333] ${
+        className={`fixed bottom-0 left-0 right-0 bg-gradient-to-t from-[#050B18] to-[#0B1120] transition-all duration-500 z-[160] shadow-2xl border-t border-[#1E293B] ${
           expanded ? 'h-full' : 'h-24'
         }`}
       >
         {expanded ? (
-          <div className="flex flex-col h-full w-full relative overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+          <div className="flex flex-col h-full w-full relative overflow-hidden bg-gradient-to-b from-[#0B1528] to-[#050B18]">
             <div
               className="absolute inset-0 z-0 opacity-40 blur-3xl scale-150 pointer-events-none"
               style={{
@@ -1761,8 +1761,8 @@ useEffect(() => {
                     alt="Album Art" 
                   />
                   
-                  <div className="absolute w-10 h-10 bg-[#0A0A0A] rounded-full border-4 border-[#333] flex items-center justify-center">
-                    <div className="w-3 h-3 bg-[#333] rounded-full"></div>
+                  <div className="absolute w-10 h-10 bg-[#050B18] rounded-full border-4 border-[#1E293B] flex items-center justify-center">
+                    <div className="w-3 h-3 bg-[#1E293B] rounded-full"></div>
                   </div>
                 </div>
                 
@@ -1943,13 +1943,13 @@ useEffect(() => {
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-between h-full px-4 bg-gradient-to-r from-[#0A0A0A] to-[#1A1A1A]">
+          <div className="flex items-center justify-between h-full px-4 bg-gradient-to-r from-[#050B18] to-[#0B1120] border-t border-[#1E293B]">
             <div 
               className="flex items-center gap-3 flex-1 cursor-pointer overflow-hidden"
               onClick={() => setExpanded(true)}
             >
               <div className="relative">
-                <div className={`w-12 h-12 rounded-full overflow-hidden border-2 border-[#333] ${isPlaying ? 'animate-spin-slow' : ''}`}>
+                <div className={`w-12 h-12 rounded-full overflow-hidden border-2 border-[#1E293B] ${isPlaying ? 'animate-spin-slow' : ''}`}>
                   <img 
                     src={trackCover} 
                     alt="Album Art" 
@@ -2336,7 +2336,7 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
   return (
     <div className="w-full">
       <div className="bg-transparent w-full max-w-5xl mx-auto overflow-hidden flex flex-col">
-        <div className="p-5 border-b border-[#333] bg-[#252525] rounded-t-2xl">
+        <div className="p-5 border-b border-[#1E293B] bg-[#0F172A] rounded-t-2xl">
           <div className="flex justify-between items-center mb-6">
             <div>
               <h2 className="text-[#FFF] text-2xl font-bold">Professional Upload</h2>
@@ -2345,7 +2345,7 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
             <i className="fas fa-times text-[#888] cursor-pointer text-xl hover:text-white transition-colors" onClick={onClose}></i>
           </div>
 
-          <div className="flex p-1 bg-[#111] rounded-lg">
+          <div className="flex p-1 bg-[#070D1D] border border-[#1E293B] rounded-lg">
             {['single', 'album'].map((m) => (
               <button
                 key={m}
@@ -2366,7 +2366,7 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
               <div>
                 <label className="block text-[#888] text-xs font-bold mb-1.5 uppercase">Main Artist Name</label>
                 <input
-                  className="w-full bg-[#151515] border border-[#333] p-3 rounded-lg text-white outline-none focus:border-[#1877F2]"
+                  className="w-full bg-[#070D1D] border border-[#1E293B] p-3 rounded-lg text-white outline-none focus:border-[#1877F2]"
                   value={artist}
                   onChange={(e) => setArtist(e.target.value)}
                 />
@@ -2375,7 +2375,7 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
               <div>
                 <label className="block text-[#888] text-xs font-bold mb-1.5 uppercase">Genre / Category</label>
                 <input
-                  className="w-full bg-[#151515] border border-[#333] p-3 rounded-lg text-white outline-none focus:border-[#1877F2]"
+                  className="w-full bg-[#070D1D] border border-[#1E293B] p-3 rounded-lg text-white outline-none focus:border-[#1877F2]"
                   placeholder="Pop, Hip Hop, R&B..."
                   value={genre}
                   onChange={(e) => setGenre(e.target.value)}
@@ -2388,7 +2388,7 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
                 <label className="block text-[#888] text-xs font-bold mb-1.5 uppercase">{mode === 'album' ? 'Album Artwork' : 'Artwork'}</label>
                 <div
                   onClick={handlePickCover}
-                  className="w-full bg-[#151515] border border-[#333] rounded-lg h-[120px] flex flex-col items-center justify-center cursor-pointer hover:border-[#1877F2] group relative overflow-hidden"
+                  className="w-full bg-[#070D1D] border border-[#1E293B] rounded-lg h-[120px] flex flex-col items-center justify-center cursor-pointer hover:border-[#1877F2] group relative overflow-hidden"
                 >
                   {coverPreview ? (
                     <img src={coverPreview} className="w-full h-full object-cover" alt="Cover Preview" />
@@ -2420,7 +2420,7 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
                   <label className="block text-[#888] text-xs font-bold mb-1.5 uppercase">Audio File</label>
                   <div
                     onClick={handlePickAudio}
-                    className="border-2 border-dashed border-[#333] bg-[#151515] rounded-lg h-[86px] flex items-center justify-center cursor-pointer hover:border-[#1877F2] group"
+                    className="border-2 border-dashed border-[#1E293B] bg-[#070D1D] rounded-lg h-[86px] flex items-center justify-center cursor-pointer hover:border-[#1877F2] group"
                   >
                     {audioFile ? (
                       <div className="text-[#1877F2] font-semibold flex items-center gap-2">
@@ -2447,12 +2447,12 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
             </div>
           </div>
 
-          <div className="border-t border-[#333] pt-6">
+          <div className="border-t border-[#1E293B] pt-6">
             {mode === 'single' && (
               <div>
                 <label className="block text-[#888] text-xs font-bold mb-1.5 uppercase">Song Name</label>
                 <input
-                  className="w-full bg-[#151515] border border-[#333] p-3 rounded-lg text-white outline-none focus:border-[#1877F2] text-lg font-bold"
+                  className="w-full bg-[#070D1D] border border-[#1E293B] p-3 rounded-lg text-white outline-none focus:border-[#1877F2] text-lg font-bold"
                   placeholder="Enter song title..."
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -2465,7 +2465,7 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
                 <div>
                   <label className="block text-[#888] text-xs font-bold mb-1.5 uppercase">Album Name</label>
                   <input
-                    className="w-full bg-[#151515] border border-[#333] p-3 rounded-lg text-white outline-none focus:border-[#1877F2] text-lg font-bold"
+                    className="w-full bg-[#070D1D] border border-[#1E293B] p-3 rounded-lg text-white outline-none focus:border-[#1877F2] text-lg font-bold"
                     placeholder="Enter album title..."
                     value={albumTitle}
                     onChange={(e) => setAlbumTitle(e.target.value)}
@@ -2479,7 +2479,7 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
 
                   <div className="space-y-2 mb-4">
                     {albumTracks.map((t, idx) => (
-                      <div key={idx} className="flex items-center justify-between p-3 bg-[#151515] rounded-lg">
+                      <div key={idx} className="flex items-center justify-between p-3 bg-[#070D1D] border border-[#1E293B] rounded-lg">
                         <div className="flex items-center gap-3">
                           <span className="text-[#666] font-mono">{idx + 1}</span>
                           <img src={t.coverFile ? URL.createObjectURL(t.coverFile) : (coverPreview || DEFAULT_MUSIC_COVER)} className="w-8 h-8 rounded object-cover" alt="" />
@@ -2496,12 +2496,12 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
 
                   <div className="flex flex-col gap-3">
                     <div className="grid grid-cols-2 gap-2">
-                      <input className="bg-[#151515] border border-[#333] p-2 rounded text-white text-sm" placeholder="Song Name" value={tempTrackTitle} onChange={(e) => setTempTrackTitle(e.target.value)} />
-                      <input className="bg-[#151515] border border-[#333] p-2 rounded text-white text-sm" placeholder="Artist Name" value={tempTrackArtist} onChange={(e) => setTempTrackArtist(e.target.value)} />
+                      <input className="bg-[#070D1D] border border-[#1E293B] p-2 rounded text-white text-sm" placeholder="Song Name" value={tempTrackTitle} onChange={(e) => setTempTrackTitle(e.target.value)} />
+                      <input className="bg-[#070D1D] border border-[#1E293B] p-2 rounded text-white text-sm" placeholder="Artist Name" value={tempTrackArtist} onChange={(e) => setTempTrackArtist(e.target.value)} />
                     </div>
                     <div
                       onClick={handlePickTrackCover}
-                      className="w-full bg-[#151515] border border-[#333] p-2 rounded text-sm text-[#888] hover:text-white cursor-pointer"
+                      className="w-full bg-[#070D1D] border border-[#1E293B] p-2 rounded text-sm text-[#888] hover:text-white cursor-pointer"
                     >
                       {tempTrackCoverFile ? (
                         <span className="text-[#1877F2] font-bold">
@@ -2525,7 +2525,7 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
                     <div className="flex items-center gap-2 mt-2">
                       <div
                         onClick={handlePickTrackAudio}
-                        className="flex-1 bg-[#222] hover:bg-[#333] p-2 rounded text-center cursor-pointer text-sm text-[#888] hover:text-white transition-colors border border-[#444]"
+                        className="flex-1 bg-[#0B1120] hover:bg-[#1E293B] p-2 rounded text-center cursor-pointer text-sm text-[#888] hover:text-white transition-colors border border-[#1E293B]"
                       >
                         {tempTrackFile ? (
                           <span className="text-[#1877F2] font-bold">
@@ -2558,7 +2558,7 @@ const AudioUploadModal: React.FC<AudioUploadModalProps> = ({
           </div>
         </div>
 
-        <div className="p-5 border-t border-[#333] bg-[#252525] flex justify-end rounded-b-2xl">
+        <div className="p-5 border-t border-[#1E293B] bg-[#0F172A] flex justify-end rounded-b-2xl">
           <button
             onClick={handleSubmit}
             disabled={submitting}
@@ -3031,9 +3031,9 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
   const showLoading = loadingSongs && view === 'music';
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white font-sans">
+    <div className="min-h-screen bg-[#050B18] text-[#F8FAFC] font-sans">
       {/* Navigation Tabs */}
-      <div className="sticky top-14 bg-[#0A0A0A]/95 backdrop-blur-md z-30 px-4 py-3 border-b border-[#222] flex items-center gap-4 overflow-x-auto scrollbar-hide">
+      <div className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] bg-[#0B1120]/95 backdrop-blur-md z-30 px-4 py-3 border-b border-[#1E293B] flex items-center gap-4 overflow-x-auto scrollbar-hide">
         {/* Back Button */}
         <button
           onClick={() => {
@@ -3045,7 +3045,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
               window.history.back();
             }
           }}
-          className="w-9 h-9 rounded-full bg-[#1A1D24] hover:bg-[#2B313D] border border-white/10 text-white flex items-center justify-center transition-colors shadow-sm shrink-0"
+          className="w-9 h-9 rounded-full bg-[#0F172A] hover:bg-[#1E293B] border border-[#1E293B] text-white flex items-center justify-center transition-colors shadow-sm shrink-0"
           aria-label="Back"
         >
           <i className="fas fa-arrow-left text-sm"></i>
@@ -3096,11 +3096,11 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
         {view === 'music' && !showLoading && (
           <div className="space-y-8">
             {/* Mobile Entertainment Header */}
-            <div className="rounded-[28px] bg-gradient-to-b from-[#0B0B0F] to-[#121217] border border-white/5 p-4 sm:p-5 shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
+            <div className="rounded-[28px] bg-[#0F172A] border border-[#1E293B] p-4 sm:p-5 shadow-sm">
               <div className="flex items-center justify-between gap-3 mb-4">
                 <div>
                   <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">UNERA Music</h1>
-                  <p className="text-[#A8AFBC] mt-1 text-sm sm:text-base">Discover trending sounds, creators and fresh vibes</p>
+                  <p className="text-[#94A3B8] mt-1 text-sm sm:text-base">Discover trending sounds, creators and fresh vibes</p>
                 </div>
                 {currentUser && (
                   <button onClick={() => setView('dashboard')} className="shrink-0 px-4 py-2 rounded-full bg-[#1877F2] text-white font-bold text-sm hover:opacity-90">
@@ -3114,7 +3114,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
                 <input
                   type="text"
                   placeholder="Search songs, artists..."
-                  className="w-full bg-[#1A1D24] text-white px-4 py-3 pl-11 rounded-2xl border border-[#2B313D] focus:border-[#1877F2] focus:outline-none"
+                  className="w-full bg-[#070D1D] text-[#F8FAFC] px-4 py-3 pl-11 rounded-2xl border border-[#1E293B] focus:border-[#1877F2] focus:outline-none"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -3151,7 +3151,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
                   <button
                     key={genre}
                     onClick={() => setSearchQuery(genre)}
-                    className="px-4 py-1.5 rounded-full bg-[#1A1D24] text-[#B8BCC7] text-sm hover:bg-[#1877F2] hover:text-white transition-colors whitespace-nowrap"
+                    className="px-4 py-1.5 rounded-full bg-[#070D1D] border border-[#1E293B] text-[#94A3B8] text-sm hover:bg-[#1877F2] hover:text-white transition-colors whitespace-nowrap"
                   >
                     {genre}
                   </button>
@@ -3161,7 +3161,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
 
             {/* Mini now playing strip */}
             {currentUser && currentTrack && (
-              <div className="rounded-2xl bg-[#111318] border border-white/5 p-3">
+              <div className="rounded-2xl bg-[#0F172A] border border-[#1E293B] p-3 shadow-sm">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
                     <div className={`w-12 h-12 rounded-full overflow-hidden border border-white/10 ${isPlaying ? 'animate-spin-slow' : ''}`}>
@@ -3257,7 +3257,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
                 />
               </>
             ) : (
-              <div className="rounded-2xl bg-[#111318] border border-white/5 p-4">
+              <div className="rounded-2xl bg-[#0F172A] border border-[#1E293B] p-4 shadow-sm">
                 <SectionTitle title={`Search Results (${filteredSongs.length})`} subtitle="Matched songs" />
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {filteredSongs.length > 0 ? (
@@ -3315,7 +3315,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
 
             {/* All songs list */}
             {!searchQuery && filteredSongs.length > 0 && (
-              <div className="rounded-2xl bg-[#111318] border border-white/5 p-4">
+              <div className="rounded-2xl bg-[#0F172A] border border-[#1E293B] p-4 shadow-sm">
                 <SectionTitle title="All Songs" subtitle="A fresh ranked mix from all UNERA creators" />
                 <div className="space-y-2">
                   {rankedAllSongs.slice(0, 20).map((song, index) => {
@@ -3328,7 +3328,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
                         key={song.id}
                         onClick={() => handlePlayTrackFromSong(song)}
                         className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-colors ${
-                          isCurrentTrack ? 'bg-[#1877F2]/10 border border-[#1877F2]/30' : 'hover:bg-white/5'
+                          isCurrentTrack ? 'bg-[#1877F2]/10 border border-[#1877F2]/30' : 'hover:bg-[#1E293B]'
                         }`}
                       >
                         <div className="w-6 text-center text-[#9CA3AF] font-bold text-sm">{index + 1}</div>
@@ -3344,7 +3344,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
                             e.stopPropagation();
                             toggleLike(String(song.id));
                           }}
-                          className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center"
+                          className="w-9 h-9 rounded-full bg-[#1E293B] flex items-center justify-center"
                         >
                           <i className={`${isTrackLiked(String(song.id)) ? 'fas text-[#FF4D8D]' : 'far text-white'} fa-heart`}></i>
                         </button>
@@ -3376,7 +3376,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
                       }}
                       className="w-[165px] sm:w-[185px] flex-shrink-0 snap-start cursor-pointer group"
                     >
-                      <div className="relative rounded-xl overflow-hidden aspect-[1/1] bg-[#1A1A1A]">
+                      <div className="relative rounded-xl overflow-hidden aspect-[1/1] bg-[#0B1120]">
                         <img src={album.cover} alt={album.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
                       </div>
@@ -3401,9 +3401,9 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
         {/* ALBUM DETAIL VIEW */}
         {view === 'album' && selectedAlbumData && !showLoading && (
           <div className="space-y-8">
-            <div className="bg-[#242526] rounded-2xl overflow-hidden">
-              <div className="relative p-6 bg-gradient-to-br from-[#1a1a2e] to-[#0a0a0f]">
-                <button onClick={() => setView('albums')} className="mb-4 w-10 h-10 rounded-full bg-black/20 hover:bg-black/30 flex items-center justify-center text-white">
+            <div className="bg-[#0F172A] rounded-2xl overflow-hidden border border-[#1E293B] shadow-sm">
+              <div className="relative p-6 bg-gradient-to-br from-[#0B1528] to-[#070D1D]">
+                <button onClick={() => setView('albums')} className="mb-4 w-10 h-10 rounded-full bg-[#1E293B] hover:bg-[#141E33] flex items-center justify-center text-white border border-[#1E293B]">
                   <i className="fas fa-arrow-left"></i>
                 </button>
                 <div className="flex items-center gap-4">
@@ -3415,17 +3415,17 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
                   </div>
                 </div>
               </div>
-              <div className="p-4 border-b border-[#333]">
+              <div className="p-4 border-b border-[#1E293B]">
                 <button onClick={() => selectedAlbumData.songs[0] && handlePlayTrackFromSong(selectedAlbumData.songs[0])} className="bg-[#1877F2] text-white px-6 py-3 rounded-full font-bold flex items-center gap-2">
                   <i className="fas fa-play"></i> Play All ({selectedAlbumData.totalTracks})
                 </button>
               </div>
-              <div className="divide-y divide-[#333]">
+              <div className="divide-y divide-[#1E293B]">
                 {selectedAlbumData.songs.map((song, index) => {
                   const uploaderProfile = users.find((u) => u.id === song.uploaderId);
                   const artistName = uploaderProfile?.name || uploaderProfile?.username || song.artist;
                   return (
-                    <div key={song.id} onClick={() => handlePlayTrackFromSong(song)} className="flex items-center gap-4 p-4 hover:bg-[#3A3B3C] cursor-pointer transition-colors">
+                    <div key={song.id} onClick={() => handlePlayTrackFromSong(song)} className="flex items-center gap-4 p-4 hover:bg-[#1E293B] cursor-pointer transition-colors">
                       <div className="w-6 text-center text-[#B0B3B8] font-bold">{index + 1}</div>
                       <img src={song.cover || DEFAULT_MUSIC_COVER} alt={song.title} className="w-12 h-12 rounded-lg object-cover" />
                       <div className="flex-1 min-w-0">
@@ -3448,7 +3448,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
         {view === 'upload' && currentUser && !showLoading && (
           <div className="space-y-8">
             <div className="flex items-center gap-3">
-              <button onClick={() => setView('dashboard')} className="w-11 h-11 rounded-full bg-[#242526] hover:bg-[#3A3B3C] flex items-center justify-center">
+              <button onClick={() => setView('dashboard')} className="w-11 h-11 rounded-full bg-[#0F172A] hover:bg-[#1E293B] border border-[#1E293B] flex items-center justify-center">
                 <i className="fas fa-arrow-left text-white"></i>
               </button>
               <div>
@@ -3478,7 +3478,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
         {/* DASHBOARD VIEW */}
         {view === 'dashboard' && currentUser && !showLoading && (
           <div className="space-y-8">
-            <div className="bg-[#242526] rounded-2xl p-6">
+            <div className="bg-[#0F172A] rounded-2xl p-6 border border-[#1E293B] shadow-sm">
               <div className="flex flex-col items-center justify-center mb-10 mt-4 text-center">
                 <h2 className="text-3xl font-bold mb-3 bg-gradient-to-r from-white to-gray-400 text-transparent bg-clip-text">Creator Studio</h2>
                 <p className="text-[#888] mb-6 max-w-2xl">Upload your music and albums. Monitor your performance.</p>
@@ -3488,19 +3488,19 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-                <div className="bg-[#1E1E1E] p-6 rounded-2xl border border-[#333]">
+                <div className="bg-[#0B1120] p-6 rounded-2xl border border-[#1E293B]">
                   <div className="flex items-center justify-between">
                     <div><p className="text-[#B0B3B8] text-sm">Your Uploads</p><p className="text-2xl font-bold text-white">{songs.filter(s => s.uploaderId === (currentUser as any).id).length}</p></div>
                     <i className="fas fa-upload text-[#45BD62] text-xl"></i>
                   </div>
                 </div>
-                <div className="bg-[#1E1E1E] p-6 rounded-2xl border border-[#333]">
+                <div className="bg-[#0B1120] p-6 rounded-2xl border border-[#1E293B]">
                   <div className="flex items-center justify-between">
                     <div><p className="text-[#B0B3B8] text-sm">Total Plays</p><p className="text-2xl font-bold text-white">{myTotalPlays.toLocaleString()}</p></div>
                     <i className="fas fa-play-circle text-[#07E8F8] text-xl"></i>
                   </div>
                 </div>
-                <div className="bg-[#1E1E1E] p-6 rounded-2xl border border-[#333]">
+                <div className="bg-[#0B1120] p-6 rounded-2xl border border-[#1E293B]">
                   <div className="flex items-center justify-between">
                     <div><p className="text-[#B0B3B8] text-sm">Likes Received</p><p className="text-2xl font-bold text-white">{songs.filter(s => s.uploaderId === (currentUser as any).id).reduce((sum, s) => sum + ((s.stats as any)?.likes || 0), 0)}</p></div>
                     <i className="fas fa-heart text-[#FF4D8D] text-xl"></i>
@@ -3508,18 +3508,18 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
                 </div>
               </div>
 
-              <div className="bg-[#1E1E1E] rounded-2xl border border-[#333] overflow-hidden">
-                <div className="p-6 border-b border-[#333]"><h3 className="text-xl font-bold text-white">Your Catalog</h3><p className="text-[#888] text-sm">Manage your uploaded content</p></div>
+              <div className="bg-[#0B1120] rounded-2xl border border-[#1E293B] overflow-hidden">
+                <div className="p-6 border-b border-[#1E293B]"><h3 className="text-xl font-bold text-white">Your Catalog</h3><p className="text-[#888] text-sm">Manage your uploaded content</p></div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
-                    <thead className="bg-[#252525] text-[#888] text-xs uppercase font-bold">
+                    <thead className="bg-[#0F172A] text-[#888] text-xs uppercase font-bold border-b border-[#1E293B]">
                       <tr><th className="p-4">Content</th><th className="p-4 text-right">Plays</th><th className="p-4 text-right">Likes</th><th className="p-4 text-right">Actions</th></tr>
                     </thead>
-                    <tbody className="divide-y divide-[#333]">
+                    <tbody className="divide-y divide-[#1E293B]">
                       {songs.filter((s) => s.uploaderId === (currentUser as any).id).map((item: any) => {
                         const playCount = getSongPlayCount(item, trackPlays);
                         return (
-                          <tr key={item.id} className="hover:bg-[#2A2A2A]">
+                          <tr key={item.id} className="hover:bg-[#1E293B] transition-colors">
                             <td className="p-4"><div className="flex items-center gap-3"><img src={item.cover || DEFAULT_MUSIC_COVER} className="w-10 h-10 rounded object-cover" alt="" /><div><div className="font-bold text-white text-sm">{item.title}</div><div className="text-xs text-[#888]">{item.artist}</div></div></div></td>
                             <td className="p-4 text-right font-bold text-sm">{formatCompactNumber(playCount)}</td>
                             <td className="p-4 text-right font-bold text-sm">{(item.stats as any)?.likes || 0}</td>
@@ -3539,12 +3539,12 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
         {/* ARTIST VIEW */}
         {view === 'artist' && !showLoading && (
           <div className="space-y-8">
-            <div className="bg-[#242526] rounded-2xl overflow-hidden">
+            <div className="bg-[#0F172A] rounded-2xl overflow-hidden border border-[#1E293B] shadow-sm">
               <div className="h-48 relative">
                 <img src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" className="w-full h-full object-cover" alt="" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050B18] to-transparent"></div>
                 <div className="absolute bottom-4 left-4 flex items-end gap-4">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#1877F2] to-[#F3425F] flex items-center justify-center text-white text-3xl font-bold border-4 border-[#0A0A0A]">
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#1877F2] to-[#F3425F] flex items-center justify-center text-white text-3xl font-bold border-4 border-[#050B18]">
                     {selectedArtistId ? (users.find(u => u.id === selectedArtistId)?.name?.charAt(0) || 'A') : 'A'}
                   </div>
                   <div className="mb-2"><h1 className="text-2xl font-bold text-white">{users.find(u => u.id === selectedArtistId)?.name || 'Artist'}</h1></div>
@@ -3554,7 +3554,7 @@ const MusicSystem: React.FC<MusicSystemProps> = ({
                 <h2 className="text-xl font-bold text-white mb-4">Popular Releases</h2>
                 <div className="space-y-2">
                   {songs.filter(s => s.uploaderId === selectedArtistId).slice(0, 5).map((song, i) => (
-                    <div key={song.id} onClick={() => handlePlayTrackFromSong(song)} className="flex items-center gap-4 p-3 hover:bg-[#3A3B3C] rounded-xl cursor-pointer group">
+                    <div key={song.id} onClick={() => handlePlayTrackFromSong(song)} className="flex items-center gap-4 p-3 hover:bg-[#1E293B] rounded-xl cursor-pointer group transition-colors">
                       <div className="text-[#B0B3B8] font-bold w-4 text-center group-hover:hidden">{i + 1}</div>
                       <div className="hidden group-hover:block w-4 text-center text-white"><i className="fas fa-play"></i></div>
                       <img src={song.cover || DEFAULT_MUSIC_COVER} className="w-10 h-10 rounded object-cover" alt="" />

@@ -1960,9 +1960,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ currentUser, recipient, 
 
       <input type="file" ref={fileInputRef} className="hidden" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt" onChange={handleFileSelect} />
 
-      {/* Header */}
-      <div className="h-14 px-3 flex items-center justify-between border-b border-[#333] bg-[#1e1e1e]">
-        <div className="flex items-center gap-2 min-w-0">
+      {/* Header with edge-to-edge status bar padding */}
+      <div className="pt-[env(safe-area-inset-top,0px)] border-b border-[#333] bg-[#1e1e1e]">
+        <div className="h-14 px-3 flex items-center justify-between">
+          <div className="flex items-center gap-2 min-w-0">
           <button type="button" onClick={onClose} className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#2d2d2d] transition-colors" aria-label="Back"><i className="fas fa-arrow-left text-[18px] text-[#e4e6eb]" /></button>
           <div className="flex items-center gap-2 min-w-0">
             <Avatar src={(recipient as any)?.profile_image_url} name={(recipient as any)?.name} size={36} />
@@ -1978,6 +1979,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ currentUser, recipient, 
           <button type="button" className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#2d2d2d]" aria-label="Info"><i className="fas fa-circle-info text-[18px] text-[#1B74E4]" /></button>
         </div>
       </div>
+    </div>
 
       {/* Reply/Edit banner */}
       {(replyTo || editTarget) && (

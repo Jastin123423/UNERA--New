@@ -269,7 +269,7 @@ export const ToolsPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
 
     return (
         <div className="w-full max-w-[800px] mx-auto min-h-screen bg-[#18191A] font-sans pb-24">
-            <div className="sticky top-14 bg-[#18191A]/95 backdrop-blur-md z-30 px-5 py-4 border-b border-[#3E4042] flex items-center gap-3">
+            <div className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] bg-[#18191A]/95 backdrop-blur-md z-30 px-5 py-4 border-b border-[#3E4042] flex items-center gap-3">
                 {onBack && (
                     <button
                         onClick={onBack}

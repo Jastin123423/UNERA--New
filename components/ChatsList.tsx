@@ -253,13 +253,13 @@ export const ChatsList: React.FC<ChatsListProps> = ({
 
   return (
     // 🔥 FIX 1: Back to fixed inset-0 overlay mode
-    <div className="fixed inset-0 z-[150] bg-[#18191A] font-sans flex flex-col">
+    <div className="fixed inset-0 z-[150] bg-[#18191A] font-sans flex flex-col pb-[env(safe-area-inset-bottom,0px)]">
       
       {/* 🔥 FIX 2: Removed min-h-0, kept flex-1 */}
       <div className="bg-[#242526] flex-1 flex flex-col overflow-hidden">
         
-        {/* Sticky header */}
-        <div className="sticky top-0 z-20 px-3 pt-3 pb-2 flex items-center border-b border-[#3E4042] bg-[#242526]">
+        {/* Sticky header with edge-to-edge status bar padding */}
+        <div className="sticky top-0 z-20 px-3 pt-[calc(0.75rem+env(safe-area-inset-top,0px))] pb-2 flex items-center border-b border-[#3E4042] bg-[#242526]">
           <div className="flex items-center gap-2">
             <button
               type="button"

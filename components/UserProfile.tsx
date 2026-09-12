@@ -1507,7 +1507,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
   return (
     <div className="w-full bg-[#18191A] min-h-screen">
       {/* Profile Top Navigation Bar with Back Button */}
-      <div className="sticky top-14 z-30 bg-[#242526]/95 backdrop-blur-md border-b border-[#3E4042] px-4 py-2.5 flex items-center gap-3">
+      <div className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-30 bg-[#242526]/95 backdrop-blur-md border-b border-[#3E4042] px-4 py-2.5 flex items-center gap-3">
         <button
           onClick={() => {
             if (onBack) {

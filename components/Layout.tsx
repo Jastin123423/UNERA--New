@@ -87,24 +87,26 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
 
   return (
     <div className="fixed inset-0 z-[200] bg-[#050B18] animate-slide-down flex flex-col font-sans overflow-hidden">
-      <div className="h-16 px-4 flex items-center justify-between border-b border-[#1E293B] bg-[#0B1120] shadow-sm flex-shrink-0">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#166FE5] to-[#1877F2] flex items-center justify-center shadow-sm">
-            <i className="fas fa-th-large text-white text-[14px]"></i>
+      <div className="pt-[env(safe-area-inset-top,0px)] border-b border-[#1E293B] bg-[#0B1120] shadow-sm flex-shrink-0">
+        <div className="h-16 px-4 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#166FE5] to-[#1877F2] flex items-center justify-center shadow-sm">
+              <i className="fas fa-th-large text-white text-[14px]"></i>
+            </div>
+            <h2 className="text-[20px] font-bold text-[#F8FAFC]">Menu</h2>
           </div>
-          <h2 className="text-[20px] font-bold text-[#F8FAFC]">Menu</h2>
-        </div>
 
-        <button
-          onClick={onClose}
-          className="w-9 h-9 bg-[#0F172A] hover:bg-[#1E293B] border border-[#1E293B] rounded-xl flex items-center justify-center cursor-pointer text-[#94A3B8] hover:text-[#F8FAFC] transition-colors"
-          aria-label="Close menu"
-        >
-          <i className="fas fa-times text-lg"></i>
-        </button>
+          <button
+            onClick={onClose}
+            className="w-9 h-9 bg-[#0F172A] hover:bg-[#1E293B] border border-[#1E293B] rounded-xl flex items-center justify-center cursor-pointer text-[#94A3B8] hover:text-[#F8FAFC] transition-colors"
+            aria-label="Close menu"
+          >
+            <i className="fas fa-times text-lg"></i>
+          </button>
+        </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 bg-[#050B18]">
+      <div className="flex-1 overflow-y-auto p-4 pb-[calc(2.5rem+env(safe-area-inset-bottom,0px))] bg-[#050B18]">
         {currentUser && (
           <div
             className="flex items-center gap-3 p-3.5 bg-[#0F172A] border border-[#1E293B] rounded-2xl shadow-sm mb-5 cursor-pointer hover:bg-[#141E33] transition-colors"
@@ -267,13 +269,13 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
     <nav
       id="unera-bottom-navigation"
       aria-label="Bottom Navigation"
-      className="fixed bottom-0 left-0 right-0 z-40 bg-[#070D1D]/95 backdrop-blur-lg border-t border-[#1E293B] shadow-[0_-4px_24px_rgba(0,0,0,0.55)] pb-[env(safe-area-inset-bottom,0px)]"
+      className="fixed bottom-0 left-0 right-0 z-40 bg-[#050B18]/98 backdrop-blur-xl border-t border-[#1E293B] shadow-[0_-8px_30px_rgba(0,0,0,0.65)] pb-[max(env(safe-area-inset-bottom,0px),0px)]"
     >
       <div className="max-w-md sm:max-w-lg md:max-w-xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between relative">
         {/* 1. Home */}
         <button
           onClick={onHomeClick}
-          className="flex flex-col items-center justify-center flex-1 h-full pt-1 transition-all duration-150 active:scale-95 group focus:outline-none"
+          className="flex flex-col items-center justify-center flex-1 h-full pt-1 transition-all duration-150 active:scale-95 group focus:outline-none cursor-pointer"
           aria-label="Home"
         >
           <div className="relative flex items-center justify-center">
@@ -299,7 +301,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
         {/* 2. Market (remapped from Product) */}
         <button
           onClick={onMarketplaceClick}
-          className="flex flex-col items-center justify-center flex-1 h-full pt-1 transition-all duration-150 active:scale-95 group focus:outline-none"
+          className="flex flex-col items-center justify-center flex-1 h-full pt-1 transition-all duration-150 active:scale-95 group focus:outline-none cursor-pointer"
           aria-label="Market"
         >
           <div className="relative flex items-center justify-center">
@@ -328,7 +330,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
         <div className="flex flex-col items-center justify-center flex-1 h-full relative">
           <button
             onClick={onPostClick}
-            className="absolute -top-5.5 w-14 h-14 rounded-full bg-gradient-to-tr from-[#166FE5] via-[#1877F2] to-[#3B82F6] text-white shadow-[0_6px_22px_rgba(24,119,242,0.48)] border-[3.5px] border-[#070D1D] flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none group"
+            className="absolute -top-5.5 w-14 h-14 rounded-full bg-gradient-to-tr from-[#166FE5] via-[#1877F2] to-[#3B82F6] text-white shadow-[0_6px_22px_rgba(24,119,242,0.48)] border-[3.5px] border-[#050B18] flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none group z-10"
             aria-label="Create Post"
             title="Create Post"
           >
@@ -342,7 +344,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
         {/* 4. Message (remapped from Madeni) */}
         <button
           onClick={onMessageClick}
-          className="flex flex-col items-center justify-center flex-1 h-full pt-1 transition-all duration-150 active:scale-95 group focus:outline-none"
+          className="flex flex-col items-center justify-center flex-1 h-full pt-1 transition-all duration-150 active:scale-95 group focus:outline-none cursor-pointer"
           aria-label="Message"
         >
           <div className="relative flex items-center justify-center">
@@ -370,7 +372,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
         {/* 5. Menu */}
         <button
           onClick={onMenuClick}
-          className="flex flex-col items-center justify-center flex-1 h-full pt-1 transition-all duration-150 active:scale-95 group focus:outline-none"
+          className="flex flex-col items-center justify-center flex-1 h-full pt-1 transition-all duration-150 active:scale-95 group focus:outline-none cursor-pointer"
           aria-label="Menu"
         >
           <div className="relative flex items-center justify-center">
@@ -561,8 +563,8 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      {/* TOP HEADER - CLEAN DARK NAVY BAR */}
-      <header className="sticky top-0 z-50 bg-[#0B1120]/95 backdrop-blur-md border-b border-[#1E293B]">
+      {/* TOP HEADER - CLEAN DARK NAVY BAR WITH EDGE-TO-EDGE STATUS BAR INTEGRATION */}
+      <header className="sticky top-0 z-50 bg-[#0B1120]/98 backdrop-blur-xl border-b border-[#1E293B] pt-[env(safe-area-inset-top,0px)]">
         <div className="h-14 px-3 sm:px-4 flex items-center justify-between gap-2 max-w-7xl mx-auto">
           {/* LEFT: Back (if non-home), UNERA Icon and Name separated extending to the far left */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
